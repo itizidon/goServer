@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"log"
 	"time"
+	"net/http"
+	"io"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -31,5 +33,12 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	http.HandleFunc("/", homeHandler)
 	fmt.Println(databases)
+	http.ListenAndServe(":8080", nil)
+}
+
+func homeHandler(w http.ResponseWriter, r *http.Request){
+	io.WriteString(w, "w")
 }
